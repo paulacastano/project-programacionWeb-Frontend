@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UntypedFormBuilder, UntypedFormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { AuthService } from '@core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import Swal from 'sweetalert2';
 
 @Component({
+  // Decorador que indica que la clase es un componente
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
@@ -23,6 +30,7 @@ import Swal from 'sweetalert2';
   standalone: true,
 })
 export class SigninComponent implements OnInit {
+  // Componente de inicio de sesión
   authForm!: UntypedFormGroup;
   submitted = false;
   loading = false;
@@ -34,50 +42,57 @@ export class SigninComponent implements OnInit {
   password = '';
 
   constructor(
+    // Constructor que inyecta los servicios necesarios
     private readonly formBuilder: UntypedFormBuilder,
     private readonly router: Router,
-    private readonly authService: AuthService,
-  ) { }
+    private readonly authService: AuthService
+  ) {}
 
   ngOnInit() {
+    // Método que se ejecuta al inicializar el componente
     this.authForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
   get f() {
+    // Método que devuelve los controles del formulario
     return this.authForm.controls;
   }
 
   onSubmit() {
+    // Método que se ejecuta al enviar el formulario
     this.submitted = true;
     this.error = '';
-  
+
     if (this.authForm.invalid) {
       Swal.fire('Error', 'Usuario y contraseña no válidos.', 'error');
       return;
     }
-  
-    this.authService
-      .login(this.authForm.get('username')?.value, this.authForm.get('password')?.value)
+
+    this.authService // Servicio de autenticación
+      .login(
+        this.authForm.get('username')?.value,
+        this.authForm.get('password')?.value
+      )
       .subscribe({
         next: (res) => {
           if (res?.token) {
             // Guardar el token
             sessionStorage.setItem('accessToken', res.token);
-  
+
             // Mostrar en consola para depuración
             console.log('Token recibido:', res.token);
-  
+
             // Actualizar el usuario en AuthService
             this.authService.setToken(res.token);
-  
+
             Swal.fire({
               title: 'Inicio de sesión exitoso',
               text: 'Redirigiendo al dashboard...',
               icon: 'success',
               timer: 2000,
-              showConfirmButton: false
+              showConfirmButton: false,
             }).then(() => {
               this.router.navigate(['/dashboard/main']);
             });
@@ -88,8 +103,12 @@ export class SigninComponent implements OnInit {
         error: (error) => {
           this.submitted = false;
           this.loading = false;
-          Swal.fire('Error en el inicio de sesión', error.error?.message || 'Error desconocido', 'error');
-        }
+          Swal.fire(
+            'Error en el inicio de sesión',
+            error.error?.message || 'Error desconocido',
+            'error'
+          );
+        },
       });
   }
 }
