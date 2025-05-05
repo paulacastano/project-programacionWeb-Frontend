@@ -13,15 +13,16 @@ export const APP_ROUTE: Route[] = [
         loadChildren: () =>
           import('./dashboard/dashboard.routes').then((m) => m.DASHBOARD_ROUTE),
       },
+      {
+        path: 'page',
+        loadChildren: () =>
+          import('./page/page.routes').then((m) => m.PAGE_ROUTE),
+      },
     ],
   },
   {
     path: 'authentication',
     loadChildren: () =>
       import('./authentication/auth.routes').then((m) => m.AUTH_ROUTE),
-  },
-  {
-    path: 'page',
-    loadChildren: () => import('./page/page.routes').then((m) => m.PAGE_ROUTE),
   },
 ];
