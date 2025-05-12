@@ -50,7 +50,7 @@ export interface User {
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'email', 'role', 'status', 'actions'];
+  displayedColumns: string[] = ['name', 'email', 'role', 'actions'];
 
   breadcrumbs = [
     { title: 'Gestión de Usuarios', items: [], active: 'Datos básicos' },

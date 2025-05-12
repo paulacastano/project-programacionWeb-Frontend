@@ -34,7 +34,7 @@ export class UsersService {
         email: filters?.email || '',
       },
     });
-    return this.http.post<any>(endpoint, filters);
+    return this.http.get<any>(endpoint, { params });
   }
 
   getAllAdministrator(): Observable<any> {

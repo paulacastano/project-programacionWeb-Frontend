@@ -1,1 +1,85 @@
-<p>modal-create-users works!</p>
+<div class="col-lg-12 col-md-12 col-sm-12">
+  <h2 mat-dialog-title>Creación de usuarios</h2>
+  <div mat-dialog-content>
+    <form [formGroup]="formCreateUser">
+      <div class="row mt-4">
+        <!-- Nombre -->
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" />
+          </mat-form-field>
+        </div>
+
+        <!-- Correo -->
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput formControlName="email" />
+          </mat-form-field>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" formControlName="password" />
+          </mat-form-field>
+        </div>
+
+        <!-- Confirmar contraseña -->
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Confirmar contraseña</mat-label>
+            <input matInput type="password" formControlName="confirmPassword" />
+            <mat-error
+              *ngIf="formCreateUser.get('confirmPassword')?.hasError('invalid')"
+            >
+              Las contraseñas no coinciden
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Rol -->
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Rol</mat-label>
+            <mat-select
+              formControlName="rol_id"
+              (selectionChange)="onChangeRole($event)"
+            >
+              <mat-option value="">Seleccionar</mat-option>
+              <mat-option value="1">Administrador</mat-option>
+              <mat-option value="2">Usuario</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Campo de administrador condicional -->
+        <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="showFielAdministrator">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Administrador</mat-label>
+            <mat-select formControlName="administrator_id">
+              <mat-option value="">Seleccionar</mat-option>
+              <mat-option *ngFor="let item of administrators" [value]="item.id">
+                {{ item.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button
+      mat-button
+      cdkFocusInitial
+      [disabled]="formCreateUser.invalid"
+      (click)="onSubmit()"
+    >
+      Crear
+    </button>
+  </mat-dialog-actions>
+</div>
