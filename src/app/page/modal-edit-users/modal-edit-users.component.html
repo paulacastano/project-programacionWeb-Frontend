@@ -1,1 +1,61 @@
-<p>modal-edit-users works!</p>
+<div class="col-lg-12 col-md-12 col-sm-12">
+  <h2 mat-dialog-title>Actualización de Usuarios</h2>
+  <br />
+  <div mat-dialog-content>
+    <form [formGroup]="formUpdateUser">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" />
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput formControlName="email" />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Administrador</mat-label>
+            <mat-select formControlName="administrator_id">
+              <mat-option value="">Seleccionar</mat-option>
+              <ng-container
+                *ngIf="administratorsValues.length > 0; else noAdmins"
+              >
+                <mat-option
+                  *ngFor="let item of administratorsValues"
+                  [value]="item.id"
+                >
+                  {{ item.nombre }}
+                </mat-option>
+              </ng-container>
+              <ng-template #noAdmins>
+                <mat-option disabled
+                  >No hay administradores disponibles</mat-option
+                >
+              </ng-template>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">Cancelar</button>
+    <button
+      mat-button
+      cdkFocusInitial
+      type="button"
+      (click)="updateUser()"
+      [disabled]="formUpdateUser.invalid"
+    >
+      Actualizar
+    </button>
+  </mat-dialog-actions>
+</div>
