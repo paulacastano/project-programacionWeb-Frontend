@@ -1,13 +1,11 @@
+<!-- Página de error 404 con mensaje de acceso restringido y botón para volver al inicio -->
 <div class="auth-container">
   <div class="row auth-main">
-    
     <div class="col-sm-12 auth-form-section">
       <div class="form-section">
         <div class="auth-wrapper">
           <form>
-            <span class="error-header p-b-45">
-              404
-            </span>
+            <span class="error-header p-b-45"> 404 </span>
             <span class="error-subheader p-b-5">
               No tienes permiso para ver este módulo
             </span>
@@ -15,7 +13,14 @@
               Solo para usuarios con rol de Administrador
             </span>
             <div class="container-auth-form-btn mt-5">
-              <button mat-flat-button color color="primary" class="auth-form-btn" type="submit" (click)="redirectHome()">
+              <button
+                mat-flat-button
+                color
+                color="primary"
+                class="auth-form-btn"
+                type="submit"
+                (click)="redirectHome()"
+              >
                 Volver al inicio
               </button>
             </div>

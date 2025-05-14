@@ -1,3 +1,5 @@
+//// Componente modal para la creación de usuarios. Permite ingresar los datos del usuario, validando el formulario y gestionando la lógica relacionada con los roles y administradores.
+
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import {

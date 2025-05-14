@@ -31,15 +31,15 @@ import Swal from 'sweetalert2';
 })
 export class SigninComponent implements OnInit {
   // Componente de inicio de sesión
-  authForm!: UntypedFormGroup;
-  submitted = false;
-  loading = false;
-  returnUrl!: string;
-  error = '';
-  hide = true;
+  authForm!: UntypedFormGroup; // Formulario reactivo para la autenticación
+  submitted = false; // Estado para saber si el formulario fue enviado
+  loading = false; // Estado para gestionar el proceso de carga
+  returnUrl!: string; // URL a la que redirigir después de iniciar sesión
+  error = ''; // Mensaje de error en caso de fallos en la autenticación
+  hide = true; // Control para ocultar/mostrar la contraseña
 
-  email = '';
-  password = '';
+  email = ''; // Variable para almacenar el correo electrónico
+  password = ''; // Variable para almacenar la contraseña
 
   constructor(
     // Constructor que inyecta los servicios necesarios

@@ -1,3 +1,7 @@
+// Servicio que gestiona la configuración global de la aplicación.
+// Guarda y carga la configuración del layout (tema, colores, barra lateral, etc.)
+// en el localStorage para persistir entre recargas de la página.
+
 import { Injectable } from '@angular/core';
 import { InConfiguration } from '../core/models/config.interface';
 
@@ -31,6 +35,7 @@ export class ConfigService {
     localStorage.setItem('configData', JSON.stringify(this.configData));
   }
 
+  // Función que carga la configuración desde localStorage
   loadConfigData() {
     const configData = localStorage.getItem('configData');
     if (configData) {

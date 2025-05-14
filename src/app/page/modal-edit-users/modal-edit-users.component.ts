@@ -21,6 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { debounceTime } from 'rxjs';
 import { UsersService } from 'app/services/users/users.service';
 
+// Este componente se encarga de mostrar un modal para editar la información de un usuario
 @Component({
   selector: 'app-modal-edit-users',
   standalone: true,

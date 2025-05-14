@@ -1,3 +1,6 @@
+//// Servicio de autenticación que gestiona el inicio de sesión, cierre de sesión,
+// almacenamiento y decodificación del token JWT, así como la verificación del rol del usuario.
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';

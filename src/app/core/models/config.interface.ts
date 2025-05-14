@@ -1,3 +1,4 @@
+// Interfaz para la configuración de la aplicación
 export interface InConfiguration {
   layout: {
     rtl: boolean;

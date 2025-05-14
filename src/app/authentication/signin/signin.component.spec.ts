@@ -1,3 +1,4 @@
+//Aqui se define el componente de inicio de sesión
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { SigninComponent } from './signin.component';
 describe('SigninComponent', () => {
@@ -5,8 +6,8 @@ describe('SigninComponent', () => {
   let fixture: ComponentFixture<SigninComponent>;
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    imports: [SigninComponent]
-}).compileComponents();
+      imports: [SigninComponent],
+    }).compileComponents();
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(SigninComponent);
