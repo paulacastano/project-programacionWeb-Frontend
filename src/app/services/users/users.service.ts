@@ -38,7 +38,7 @@ export class UsersService {
   }
 
   getAllAdministrator(): Observable<any> {
-    const endpoint = `${this.urlBaseService}/api/v1/users/getAllAdministrator/1`;
+    const endpoint = `${this.urlBaseService}/api/v1/users/roles/1`;
     return this.http.get<any>(endpoint);
   }
 

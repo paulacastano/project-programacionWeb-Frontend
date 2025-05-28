@@ -44,7 +44,7 @@ import { UsersService } from 'app/services/users/users.service';
 export class ModalCreateUsersComponent implements OnInit {
   formCreateUser!: FormGroup;
   administrators: any[] = [];
-  showFielAdministrator: boolean = false;
+  showFieldAdministrator: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -90,7 +90,7 @@ export class ModalCreateUsersComponent implements OnInit {
   getAllAdministrator() {
     this._usersService.getAllAdministrator().subscribe({
       next: (res) => {
-        this.administrators = res.data;
+        this.administrators = res.users || [];
       },
       error: (err) => {
         this._snackBar.open('Error al cargar los administradores', 'Cerrar', {
@@ -109,13 +109,13 @@ export class ModalCreateUsersComponent implements OnInit {
   }
 
   private hideAdministratorField() {
-    this.showFielAdministrator = false;
+    this.showFieldAdministrator = false;
     this.formCreateUser.get('administrador_id')?.clearValidators();
     this.formCreateUser.get('administrador_id')?.updateValueAndValidity();
   }
 
   private showAdministratorField() {
-    this.showFielAdministrator = true;
+    this.showFieldAdministrator = true;
     this.formCreateUser
       .get('administrador_id')
       ?.setValidators([Validators.required]);

@@ -56,13 +56,13 @@
         </div>
 
         <!-- Campo de administrador condicional -->
-        <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="showFielAdministrator">
+        <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="showFieldAdministrator">
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Administrador</mat-label>
-            <mat-select formControlName="administrator_id">
+            <mat-select formControlName="administrador_id">
               <mat-option value="">Seleccionar</mat-option>
               <mat-option *ngFor="let item of administrators" [value]="item.id">
-                {{ item.name }}
+                {{ item.nombre }}
               </mat-option>
             </mat-select>
           </mat-form-field>
