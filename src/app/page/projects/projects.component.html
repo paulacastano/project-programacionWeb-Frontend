@@ -84,7 +84,7 @@
                     Total de usuarios
                   </th>
                   <td mat-cell *matCellDef="let element">
-                    {{ generalAction(element.administrador_id) }}
+                    {{ element.total_usuarios }}
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="administrator">
@@ -100,14 +100,21 @@
                   <td mat-cell *matCellDef="let element">
                     <button
                       mat-icon-button
-                      matTooltip="Editar usuario"
-                      (click)="generalAction(element)"
+                      matTooltip="Ver proyecto"
+                      (click)="verDetalle(element.id)"
+                    >
+                      <mat-icon>visibility</mat-icon>
+                    </button>
+                    <button
+                      mat-icon-button
+                      matTooltip="Editar proyecto"
+                      (click)="generalAction(element.id)"
                     >
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button
                       mat-icon-button
-                      matTooltip="Eliminar usuario"
+                      matTooltip="Eliminar proyecto"
                       (click)="generalAction(element)"
                     >
                       <mat-icon>delete</mat-icon>

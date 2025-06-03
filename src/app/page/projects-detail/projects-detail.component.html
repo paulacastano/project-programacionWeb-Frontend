@@ -1,1 +1,118 @@
-<p>projects-detail works!</p>
+<section class="content">
+  <div class="content-block">
+    @for (breadcrumb of breadcrumbs; track breadcrumb){
+    <div class="block-header">
+      <!--breadcrumb-->
+      <app-breadcrumb
+        [title]="breadcrumb.title"
+        [items]="breadcrumb.items"
+        [active_item]="breadcrumb.active"
+      >
+      </app-breadcrumb>
+    </div>
+    }
+    <div *ngIf="!isLoading && proyecto" class="row clearfix">
+      <div class="card col-md-4 mx-4">
+        <div class="card-title mt-4 mx-2">
+          <h2>Informacion del proyecto</h2>
+        </div>
+        <mat-list>
+          <mat-list-item class="my-2 px-2">
+            <span matListItemTitle class="fs-5">Nombre</span>
+            <span matListItemLine>{{ proyecto.nombre }}</span>
+          </mat-list-item>
+          <mat-list-item class="my-2 px-2">
+            <span matListItemTitle class="fs-5">Descripcion</span>
+            <span matListItemLine>{{ proyecto.descripcion }}</span>
+          </mat-list-item>
+          <mat-list-item class="my-2 px-2">
+            <span matListItemTitle class="fs-5">Administrador</span>
+            <span matListItemLine>{{ proyecto.administrador.nombre }}</span>
+          </mat-list-item>
+          <mat-list-item class="my-2 px-2">
+            <span matListItemTitle class="fs-5">Fecha de creacion</span>
+            <span matListItemLine>{{ proyecto.fecha_creacion }}</span>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <div class="card col-md-7 mx-4">
+        <div class="body">
+          <div class="materialTableHeader">
+            <div class="left">
+              <ul class="header-buttons-left ms-0">
+                <li class="tbl-title">
+                  <h2>Usuarios Asignados</h2>
+                </li>
+              </ul>
+            </div>
+            <div class="right">
+              <ul class="tbl-export-btn">
+                <li>
+                  <button
+                    mat-flat-button
+                    class="bg-cyan"
+                    (click)="openModalAsignarNuevoUsuario(proyectoId)"
+                  >
+                    Asignar nuevo usuario
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div clas="table-responsive">
+            <table mat-table [dataSource]="dataSource" class="w-100">
+              <mat-spinner
+                *ngIf="isLoading"
+                class="loading-spinner"
+              ></mat-spinner>
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef width="25%">ID</th>
+                <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+              </ng-container>
+              <ng-container matColumnDef="name" width="40%">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.nombre }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="email" width="40%">
+                <th mat-header-cell *matHeaderCellDef>Correo Electronico</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.email }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="actions" width="20%">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let element">
+                  <button
+                    mat-icon-button
+                    matTooltip="Desasociar usuario"
+                    (click)="disassociateUserFromProject(element.id)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            <div
+              *ngIf="
+                dataSource && dataSource.data && dataSource.data.length === 0
+              "
+              class="no-data-message"
+            >
+              No hay información disponible
+            </div>
+            <mat-paginator
+              [pageSize]="5"
+              showFirstLastButtons
+              [pageSizeOptions]="[5, 10, 15]"
+            >
+            </mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@shared/components/breadcrumb/breadcrumb.component';
 import { ProjectsService } from 'app/services/projects/projects.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
@@ -24,6 +27,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
+    MatTooltipModule,
+    CommonModule,
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
@@ -46,8 +51,6 @@ export class ProjectsComponent {
     },
   ];
 
-  breadcrumbsDetails = [{ title: '' }];
-
   dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
@@ -62,7 +65,8 @@ export class ProjectsComponent {
 
   constructor(
     private readonly _formBuilder: FormBuilder,
-    private readonly projectsService: ProjectsService
+    private readonly projectsService: ProjectsService,
+    private router: Router
   ) {
     this.createFormSearchFilter();
     this.getAllProjectsByUser();
@@ -108,5 +112,9 @@ export class ProjectsComponent {
     // Implement the logic to open a modal for creating a new project
     // This could involve using a dialog service to open a modal component
     console.log('Open modal to create a new project');
+  }
+
+  verDetalle(projectId: string) {
+    this.router.navigate(['page/projects/', projectId]);
   }
 }
