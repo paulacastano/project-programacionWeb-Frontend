@@ -67,7 +67,7 @@ export class UsersComponent implements OnInit {
   isLoading = false;
 
   userDefaultFilterSearch: any = {
-    name: undefined,
+    nombre: undefined,
     email: undefined,
   };
 
@@ -81,13 +81,13 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.createFormSearchFilter();
     this.getAllUsersByAdministrator();
-    this.handleUserFilterChange('name', 'name');
+    this.handleUserFilterChange('nombre', 'nombre');
     this.handleUserFilterChange('email', 'email');
   }
 
   createFormSearchFilter(): void {
     this.userFormSearchFilter = this._formBuilder.group({
-      name: [''],
+      nombre: [''],
       email: [''],
     });
   }

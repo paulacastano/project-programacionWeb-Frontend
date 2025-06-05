@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +14,9 @@ import { Router } from '@angular/router';
 import { BreadcrumbComponent } from '@shared/components/breadcrumb/breadcrumb.component';
 import { ProjectsService } from 'app/services/projects/projects.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { ModalCreateProjectComponent } from '../modal-create-project/modal-create-project.component';
+import { ModalEditProjectComponent } from '../modal-edit-project/modal-edit-project.component';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-projects',
@@ -29,6 +33,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
     MatPaginatorModule,
     MatTooltipModule,
     CommonModule,
+    MatSnackBarModule,
   ],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
@@ -66,7 +71,9 @@ export class ProjectsComponent {
   constructor(
     private readonly _formBuilder: FormBuilder,
     private readonly projectsService: ProjectsService,
-    private router: Router
+    private readonly dialogModel: MatDialog,
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {
     this.createFormSearchFilter();
     this.getAllProjectsByUser();
@@ -104,14 +111,51 @@ export class ProjectsComponent {
     });
   }
 
-  generalAction(value: string) {
-    console.log('General action triggered with value:', value);
+  deleteProject(projectId: string) {
+    this.projectsService.deleteProject(projectId).subscribe({
+      next: (response) => {
+        this._snackBar.open('Proyecto eliminado correctamente', 'Cerrar', {
+          duration: 5000,
+        });
+        this.getAllProjectsByUser();
+      },
+      error: () => {
+        this._snackBar.open('Error al eliminar el proyecto', 'Cerrar', {
+          duration: 3000,
+        });
+      },
+    });
   }
 
   openModalCreateProject() {
-    // Implement the logic to open a modal for creating a new project
-    // This could involve using a dialog service to open a modal component
-    console.log('Open modal to create a new project');
+    const dialogRef = this.dialogModel.open(ModalCreateProjectComponent, {
+      minWidth: '300px',
+      maxWidth: '1000px',
+      width: '840px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getAllProjectsByUser();
+      }
+    });
+  }
+
+  openModalUpdateProject(projectInformation: any) {
+    const dialogRef = this.dialogModel.open(ModalEditProjectComponent, {
+      minWidth: '300px',
+      maxWidth: '1000px',
+      width: '840px',
+      disableClose: true,
+      data: projectInformation,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getAllProjectsByUser();
+      }
+    });
   }
 
   verDetalle(projectId: string) {

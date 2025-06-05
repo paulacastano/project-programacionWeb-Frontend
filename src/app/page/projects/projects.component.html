@@ -17,7 +17,7 @@
           <div class="body">
             <form
               [formGroup]="projectFormSearchFilter"
-              class="row col-md-12m col-lg-12"
+              class="row col-md-12 col-lg-12"
             >
               <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 mb-3">
                 <mat-form-field class="w-100" appearance="outline">
@@ -108,14 +108,14 @@
                     <button
                       mat-icon-button
                       matTooltip="Editar proyecto"
-                      (click)="generalAction(element.id)"
+                      (click)="openModalUpdateProject(element)"
                     >
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button
                       mat-icon-button
                       matTooltip="Eliminar proyecto"
-                      (click)="generalAction(element)"
+                      (click)="deleteProject(element.id)"
                     >
                       <mat-icon>delete</mat-icon>
                     </button>

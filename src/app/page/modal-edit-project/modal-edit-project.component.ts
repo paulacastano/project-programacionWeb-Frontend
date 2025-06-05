@@ -28,7 +28,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ProjectsService } from 'app/services/projects/projects.service';
 
 @Component({
-  selector: 'app-modal-create-project',
+  selector: 'app-modal-edit-project',
   standalone: true,
   imports: [
     CommonModule,
@@ -43,11 +43,11 @@ import { ProjectsService } from 'app/services/projects/projects.service';
     MatInputModule,
     MatSnackBarModule,
   ],
-  templateUrl: './modal-create-project.component.html',
-  styleUrl: './modal-create-project.component.scss',
+  templateUrl: './modal-edit-project.component.html',
+  styleUrl: './modal-edit-project.component.scss',
 })
-export class ModalCreateProjectComponent {
-  formCreateProject!: FormGroup;
+export class ModalEditProjectComponent {
+  formEditProject!: FormGroup;
   searchControl = new FormControl();
   filteredOptions: Array<{ nombre: string; id: number }> = [];
   userDefaultFilterSearch: any = {
@@ -57,34 +57,49 @@ export class ModalCreateProjectComponent {
   isLoading = false;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private readonly _formBuilder: FormBuilder,
-    private readonly dialogRef: MatDialogRef<ModalCreateProjectComponent>,
+    private readonly dialogRef: MatDialogRef<ModalEditProjectComponent>,
     private usersService: UsersService,
     private projectService: ProjectsService,
     private readonly _snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.editFormProject();
+  }
 
   ngOnInit() {
-    this.createFormProject();
     this.handleProjectAdministratorChange();
+    if (this.data) {
+      this.loadProjectData(this.data);
+    }
+  }
+
+  loadProjectData(project: any) {
+    this.formEditProject.patchValue({
+      id: project.id,
+      nombre: project.nombre,
+      descripcion: project.descripcion,
+      administrator_id: project.administrator_id,
+    });
   }
 
   onSubmit() {
-    if (this.formCreateProject.invalid) {
+    if (this.formEditProject.invalid) {
       Swal.fire('Error', 'Por favor completa todos los campos', 'error');
       return;
     }
 
     const projectDataInformation = {
-      nombre: this.formCreateProject.get('nombre')?.value,
-      descripcion: this.formCreateProject.get('descripcion')?.value,
-      administrador_id: this.formCreateProject.get('administrador_id')?.value,
+      id: this.formEditProject.get('id')?.value,
+      nombre: this.formEditProject.get('nombre')?.value,
+      descripcion: this.formEditProject.get('descripcion')?.value,
+      administrador_id: this.formEditProject.get('administrador_id')?.value,
     };
 
-    this.projectService.createProject(projectDataInformation).subscribe({
+    this.projectService.updateProject(projectDataInformation).subscribe({
       next: (response) => {
         this._snackBar.open(response.message, 'Cerrar', { duration: 5000 });
-        this.formCreateProject.reset();
+        this.formEditProject.reset();
         this.dialogRef.close(true);
       },
       error: (error) => {
@@ -114,11 +129,12 @@ export class ModalCreateProjectComponent {
   }
 
   onChangeAdministratorRole(id: string) {
-    this.formCreateProject.get('administrador_id')?.setValue(id);
+    this.formEditProject.get('administrador_id')?.setValue(id);
   }
 
-  createFormProject() {
-    this.formCreateProject = this._formBuilder.group({
+  editFormProject() {
+    this.formEditProject = this._formBuilder.group({
+      id: ['', Validators.required],
       nombre: ['', Validators.required],
       descripcion: ['', [Validators.required]],
       administrador_id: [null],

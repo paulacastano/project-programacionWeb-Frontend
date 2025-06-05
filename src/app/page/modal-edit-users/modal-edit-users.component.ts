@@ -55,8 +55,8 @@ export class ModalEditUsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.data?.user) {
-      this.loadUserData(this.data.user);
+    if (this.data) {
+      this.loadUserData(this.data);
     }
   }
 
@@ -92,7 +92,7 @@ export class ModalEditUsersComponent implements OnInit {
   updateUser() {
     if (this.formUpdateUser.valid) {
       const userData = this.formUpdateUser.value;
-      const userId = this.data.user?.id;
+      const userId = this.data.id;
 
       this._usersService.updateUser(userId, userData).subscribe({
         next: (response) => {

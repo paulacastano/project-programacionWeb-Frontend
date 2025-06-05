@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URL_SERVICIOS } from '@core/models/config';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -36,5 +37,20 @@ export class ProjectsService {
         proyecto_id: projectId,
       },
     });
+  }
+
+  createProject(project: any): Observable<any> {
+    const endpoint = `${this.urlBaseService}/api/v1/projects/create`;
+    return this.http.post<any>(endpoint, project);
+  }
+
+  updateProject(project: any): Observable<any> {
+    const endpoint = `${this.urlBaseService}/api/v1/projects/update`;
+    return this.http.put<any>(endpoint, project);
+  }
+
+  deleteProject(projectId: string) {
+    const endpoint = `${this.urlBaseService}/api/v1/projects/delete/${projectId}`;
+    return this.http.delete<any>(endpoint);
   }
 }

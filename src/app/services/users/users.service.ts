@@ -37,6 +37,17 @@ export class UsersService {
     return this.http.get<any>(endpoint, { params });
   }
 
+  getUsers(filters?: any): Observable<any> {
+    const endpoint = `${this.urlBaseService}/api/v1/users`;
+    const params = new HttpParams({
+      fromObject: {
+        nombre: filters?.nombre || '',
+        email: filters?.email || '',
+      },
+    });
+    return this.http.get<any>(endpoint, { params });
+  }
+
   getAllAdministrator(): Observable<any> {
     const endpoint = `${this.urlBaseService}/api/v1/users/roles/1`;
     return this.http.get<any>(endpoint);
