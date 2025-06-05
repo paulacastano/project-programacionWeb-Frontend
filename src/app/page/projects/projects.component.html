@@ -1,8 +1,10 @@
 <section class="content">
   <div class="content-block">
+    <!-- Recorre cada breadcrumb (miga de pan)
+      para mostrar la navegación actual -->
     @for (breadcrumb of breadcrumbs; track breadcrumb){
     <div class="block-header">
-      <!--breadcrumb-->
+      <!-- Componente de breadcrumb personalizado -->
       <app-breadcrumb
         [title]="breadcrumb.title"
         [items]="breadcrumb.items"
@@ -15,10 +17,12 @@
       <div id="card-search">
         <div class="card col-md-12">
           <div class="body">
+            <!-- Formulario de búsqueda filtrada de proyectos -->
             <form
               [formGroup]="projectFormSearchFilter"
               class="row col-md-12 col-lg-12"
             >
+              <!-- Campo para buscar por nombre -->
               <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6 mb-3">
                 <mat-form-field class="w-100" appearance="outline">
                   <mat-label>Nombre</mat-label>
@@ -29,6 +33,7 @@
 
             <div class="materialTableHeader">
               <div class="left">
+                <!-- Título de la tabla -->
                 <ul class="header-buttons-left ms-0">
                   <li class="tbl-title">
                     <h2>Lista de proyectos</h2>
@@ -36,6 +41,7 @@
                 </ul>
               </div>
               <div class="right">
+                <!-- Botón para crear un nuevo proyecto -->
                 <ul class="tbl-export-btn">
                   <li>
                     <button
@@ -49,7 +55,8 @@
                 </ul>
               </div>
             </div>
-            <div clas="table-responsive">
+            <!-- Tabla que muestra los proyectos -->
+            <div class="table-responsive">
               <table mat-table [dataSource]="dataSource" class="w-100">
                 <mat-spinner
                   *ngIf="isLoading"
