@@ -58,26 +58,31 @@
             <!-- Tabla que muestra los proyectos -->
             <div class="table-responsive">
               <table mat-table [dataSource]="dataSource" class="w-100">
+                <!-- Spinner que se muestra mientras se cargan los datos -->
                 <mat-spinner
                   *ngIf="isLoading"
                   class="loading-spinner"
                 ></mat-spinner>
+                <!-- Columna ID -->
                 <ng-container matColumnDef="id">
                   <th mat-header-cell *matHeaderCellDef width="25%">ID</th>
                   <td mat-cell *matCellDef="let element">{{ element.id }}</td>
                 </ng-container>
+                <!-- Columna Nombre -->
                 <ng-container matColumnDef="name" width="20%">
                   <th mat-header-cell *matHeaderCellDef>Nombre</th>
                   <td mat-cell *matCellDef="let element">
                     {{ element.nombre }}
                   </td>
                 </ng-container>
+                <!-- Columna Descripción -->
                 <ng-container matColumnDef="description" width="25%">
                   <th mat-header-cell *matHeaderCellDef>Descripcion</th>
                   <td mat-cell *matCellDef="let element">
                     {{ element.descripcion }}
                   </td>
                 </ng-container>
+                <!-- Columna Fecha de creación -->
                 <ng-container matColumnDef="date">
                   <th mat-header-cell *matHeaderCellDef width="10%">
                     Fecha de creacion
@@ -86,6 +91,7 @@
                     {{ element.fecha_creacion }}
                   </td>
                 </ng-container>
+                <!-- Columna Total de usuarios -->
                 <ng-container matColumnDef="total-users">
                   <th mat-header-cell *matHeaderCellDef width="5%">
                     Total de usuarios
@@ -94,6 +100,7 @@
                     {{ element.total_usuarios }}
                   </td>
                 </ng-container>
+                <!-- Columna Administrador del proyecto -->
                 <ng-container matColumnDef="administrator">
                   <th mat-header-cell *matHeaderCellDef width="20%">
                     Administrador
@@ -102,9 +109,11 @@
                     {{ element.usuario.nombre }}
                   </td>
                 </ng-container>
+                <!-- Columna Acciones (ver, editar, eliminar) -->
                 <ng-container matColumnDef="actions" width="20%">
                   <th mat-header-cell *matHeaderCellDef>Acciones</th>
                   <td mat-cell *matCellDef="let element">
+                    <!-- Ver proyecto -->
                     <button
                       mat-icon-button
                       matTooltip="Ver proyecto"
@@ -112,6 +121,7 @@
                     >
                       <mat-icon>visibility</mat-icon>
                     </button>
+                    <!-- Editar proyecto -->
                     <button
                       mat-icon-button
                       matTooltip="Editar proyecto"
@@ -119,6 +129,7 @@
                     >
                       <mat-icon>edit</mat-icon>
                     </button>
+                    <!-- Eliminar proyecto -->
                     <button
                       mat-icon-button
                       matTooltip="Eliminar proyecto"
@@ -128,12 +139,13 @@
                     </button>
                   </td>
                 </ng-container>
+                <!-- Fila de encabezados -->
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr
-                  mat-row
-                  *matRowDef="let row; columns: displayedColumns"
-                ></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns">
+                  <!-- Fila de datos -->
+                </tr>
               </table>
+              <!-- Mensaje si no hay datos en la tabla -->
               <div
                 *ngIf="
                   dataSource && dataSource.data && dataSource.data.length === 0
@@ -142,6 +154,7 @@
               >
                 No hay información disponible
               </div>
+              <!-- Paginador de la tabla -->
               <mat-paginator
                 [pageSize]="5"
                 showFirstLastButtons
